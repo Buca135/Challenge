@@ -51,7 +51,7 @@ Temporary Items
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
-credential.json
+credentialsweb.json
 __pycache__/
 *.py[cod]
 *$py.class
