@@ -1,3 +1,4 @@
+from urllib import response
 from fastapi import FastAPI, status
 from fastapi.responses import JSONResponse
 from models.data_upload import Data_upload
@@ -20,5 +21,11 @@ async def search_in_doc(file_id, word:str ="default"):
 
 @app.post("/file/")
 async def create_file(data_upload: Data_upload):
+    reponse_if_null = data_upload.check_if_null()
+    if reponse_if_null:
+        return reponse_if_null
+    response_especial_character = data_upload.check_if_special_character_title()
+    if response_especial_character:
+        return response_especial_character
     print(type(data_upload.descripcion))
     return upload_file(data_upload)

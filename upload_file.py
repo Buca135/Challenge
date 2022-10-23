@@ -41,9 +41,7 @@ def upload_file(data_upload: Data_upload):
         service = build('drive', 'v3', credentials=creds)
 
         file_metadata = {'name': data_upload.titulo, 'description': data_upload.descripcion}
-        # pylint: disable=maybe-no-member
-        #media = MediaFileUpload(data_upload.titulo,
-        #                        mimetype='text/plain')
+
         file = service.files().create(body=file_metadata,
                                       fields='id, name, description').execute()
         print(F'File ID: {file.get("id")}')
