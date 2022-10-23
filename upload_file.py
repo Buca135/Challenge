@@ -1,7 +1,6 @@
 from __future__ import print_function
 
 import os.path
-import io
 
 
 from google.auth.transport.requests import Request
@@ -9,15 +8,14 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-
-import google.auth
-from googleapiclient.http import MediaIoBaseDownload
+from googleapiclient.http import MediaFileUpload
+from models.data_upload import Data_upload
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
 
-def look_for_document(file_id, word):
+def upload_file(data_upload: Data_upload):
     """Shows basic usage of the Drive v3 API.
     Prints the names and ids of the first 10 files the user has access to.
     """
@@ -42,17 +40,15 @@ def look_for_document(file_id, word):
     try:
         service = build('drive', 'v3', credentials=creds)
 
+        file_metadata = {'name': data_upload.titulo, 'description': data_upload.descripcion}
         # pylint: disable=maybe-no-member
-        request = service.files().get_media(fileId=file_id)
-        file = io.BytesIO()
-        downloader = MediaIoBaseDownload(file, request)
-        done = False
-        while done is False:
-            status, done = downloader.next_chunk()
-            print(F'Download {int(status.progress() * 100)}.')
+        #media = MediaFileUpload(data_upload.titulo,
+        #                        mimetype='text/plain')
+        file = service.files().create(body=file_metadata,
+                                      fields='id, name, description').execute()
+        print(F'File ID: {file.get("id")}')
     except HttpError as error:
         # TODO(developer) - Handle errors from drive API.
         print(f'An error occurred: {error}')
         file = None
-    return str(file.getvalue()).find(word)
-
+    return {"id": file.get("id"),"titulo": file.get("name"), "descripcion”:": file.get("description")}
