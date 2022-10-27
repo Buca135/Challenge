@@ -1,7 +1,7 @@
 # Challenge
 ---
 ## Descripción del proyecto
-Este proyecto se realiza para el caso de prueba de mercado libre, se deben desarrollar endpoints para simplificar la [API de google drive](https://developers.google.com/drive/api/guides/about-sdk). Al desplegar la API se pueden consumir los siguientes [endpoints](https://documenter.getpostman.com/view/24015996/2s84LF4c8y):
+Este proyecto se realiza para caso planteado, se deben desarrollar endpoints para simplificar la [API de google drive](https://developers.google.com/drive/api/guides/about-sdk). Al desplegar la API se pueden consumir los siguientes [endpoints](https://documenter.getpostman.com/view/24015996/2s84LF4c8y):
 1. GET Test_Conection, este endpoint hace el test de conectividad:
 
 Request: 
